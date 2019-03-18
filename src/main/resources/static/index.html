@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<input type="text" id="par1">
+<input type="text" id="par2">
+<br>
+<label for="op">연산자</label>
+<select name="op" id="op">
+  <option value="add">+</option>
+  <option value="subtract">-</option>
+  <option value="multiply">*</option>
+  <option value="divide">/</option>
+</select>
+<br>
+<button onclick="send()">전송</button>
+<br>
+<p id="result"></p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script>
+  const send = async () => {
+    let resultElem = document.getElementById("result");
+
+    const requestData = {
+      op: document.getElementById("op").value,
+      par1: document.getElementById("par1").value,
+      par2: document.getElementById("par2").value
+    };
+    try {
+      const res = await axios.get(`/${requestData.op}?par1=${requestData.par1}&par2=${requestData.par2}`);
+      resultElem.innerText = res.data;
+    }
+    catch (err) {
+      resultElem.innerText = "에러 발생";
+    }
+  };
+</script>
+</body>
+</html>
